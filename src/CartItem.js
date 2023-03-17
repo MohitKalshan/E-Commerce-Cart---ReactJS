@@ -14,6 +14,18 @@ class CartItem extends React.Component {
 // arrow function for auto bind
   increaseQty= () => {
     console.log('this',this.state);
+    this.setState((prevState)=>({
+      qty: prevState.qty + 1
+    }));
+  }
+  decreaseQty= () => {
+    const {qty} = this.state;
+    if(qty===0){
+      return;
+    }
+    this.setState((prevState)=>({
+      qty: prevState.qty - 1   
+    }));
   }
   render() {
     const { price, title, qty, img } = this.state;
@@ -38,6 +50,7 @@ class CartItem extends React.Component {
               className="action-icons"
               src="https://as1.ftcdn.net/v2/jpg/03/73/49/86/1000_F_373498649_nBxauQ0ipBSVrVcMpWWVmTpXu3BLvRyY.jpg"
               alt="decrease"
+              onClick={this.decreaseQty}
             />
             <img
               className="action-icons"
