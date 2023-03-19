@@ -1,6 +1,6 @@
 import React from "react";
 // Class components
-class CartItem extends React.Component {
+// class CartItem extends React.Component {
   
 // arrow function for auto bind
   // increaseQty= () => {
@@ -18,9 +18,9 @@ class CartItem extends React.Component {
   //     qty: prevState.qty - 1   
   //   }));
   // }
-  render() {
-    const { price, title, qty, img } = this.props.product;
-    const { product,onIncreaseQuantity,onDecreaseQuantity , onDeleteProduct } = this.props;
+  const CartItem = (props) => {
+    const { price, title, qty, img } = props.product;
+    const { product,onIncreaseQuantity,onDecreaseQuantity , onDeleteProduct } = props;
     return (
       <div className="cart-item">
         <div className="left-block">
@@ -55,7 +55,7 @@ class CartItem extends React.Component {
       </div>
     );
   }
-}
+
 const styles = {
   image: {
     height: 110,
