@@ -3,23 +3,24 @@ import React from "react";
 class CartItem extends React.Component {
   
 // arrow function for auto bind
-  increaseQty= () => {
-    console.log('this',this.state);
-    this.setState((prevState)=>({
-      qty: prevState.qty + 1
-    }));
-  }
-  decreaseQty= () => {
-    const {qty} = this.state;
-    if(qty===0){
-      return;
-    }
-    this.setState((prevState)=>({
-      qty: prevState.qty - 1   
-    }));
-  }
+  // increaseQty= () => {
+  //   console.log('this',this.state);
+  //   this.setState((prevState)=>({
+  //     qty: prevState.qty + 1
+  //   }));
+  // }
+  // decreaseQty= () => {
+  //   const {qty} = this.state;
+  //   if(qty===0){
+  //     return;
+  //   }
+  //   this.setState((prevState)=>({
+  //     qty: prevState.qty - 1   
+  //   }));
+  // }
   render() {
     const { price, title, qty, img } = this.props.product;
+    const { product,onIncreaseQuantity,onDecreaseQuantity , onDeleteProduct } = this.props;
     return (
       <div className="cart-item">
         <div className="left-block">
@@ -35,18 +36,19 @@ class CartItem extends React.Component {
               className="action-icons"
               src="https://as2.ftcdn.net/v2/jpg/01/07/62/07/1000_F_107620769_UwNVSoXnKS4VNcOKoZjPohlEPn83oE38.jpg"
               alt="increase"
-              onClick={this.increaseQty}
+              onClick={()=>onIncreaseQuantity(product)}
             />
             <img
               className="action-icons"
               src="https://as1.ftcdn.net/v2/jpg/03/73/49/86/1000_F_373498649_nBxauQ0ipBSVrVcMpWWVmTpXu3BLvRyY.jpg"
               alt="decrease"
-              onClick={this.decreaseQty}
+              onClick={()=>onDecreaseQuantity(product)}
             />
             <img
               className="action-icons"
               src="https://as2.ftcdn.net/v2/jpg/01/90/89/15/1000_F_190891550_N7uKp2aHE3mOc20dmtDytj7atgvbhdOu.jpg"
               alt="delete"
+              onClick={()=>onDeleteProduct(product.id)}
             />
           </div>
         </div>
