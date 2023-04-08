@@ -26,7 +26,8 @@ const styles = {
       alignItems: 'center'
     },
     cartIconContainer: {
-      position: 'relative'
+      position: 'relative',
+      right: 25     
     },
     cartCount: {
       background: 'yellow',
