@@ -1,37 +1,32 @@
 import React from "react";
 import Cart from "./Cart";
 import Navbar from "./Navbar";
+import { db } from "./FirebaseConfig";
+import { collection, getDocs } from "firebase/firestore";
 
 class App extends React.Component {
   // State
   constructor() {
     super();
     this.state = {
-      products: [
-        {
-          price: "99",
-          title: "Watch",
-          qty: 1,
-          img: "https://images.unsplash.com/photo-1584208124193-df98a65afaf6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=484&q=80",
-          id: 1,
-        },
-        {
-          price: "999",
-          title: "Phone",
-          qty: 4,
-          img: "https://images.unsplash.com/photo-1580910051074-3eb694886505?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=465&q=80",
-          id: 2,
-        },
-        {
-          price: "999",
-          title: "Laptop",
-          qty: 10,
-          img: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80",
-          id: 3,
-        },
-      ],
+      products: [],
     };
   }
+
+  componentDidMount() {
+    // onSnapshot(collection(db,"products"),(snapshot)=>{
+    //   console.log(snapshot);
+    // });
+    const getData = async () => {
+      const querySnapshot = await getDocs(collection(db, "products"));
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+      });
+    };
+    getData();
+  }
+
   handleIncreaseQuantity = (product) => {
     // console.log(product);
     const { products } = this.state;
@@ -75,33 +70,31 @@ class App extends React.Component {
     });
 
     return count;
-  }
+  };
   getCartTotal = () => {
     const { products } = this.state;
     let cartTotal = 0;
     products.map((product) => {
       cartTotal = cartTotal + product.price * product.qty;
-      return '';
-  });
-  return cartTotal;
-}
-
+      return "";
+    });
+    return cartTotal;
+  };
 
   render() {
     const { products } = this.state;
     return (
       <div className="App">
-        <Navbar
-        count={this.getCartCount()} 
-         />
-        <Cart 
-        products={products}
-        onIncreaseQuantity={this.handleIncreaseQuantity}
-        onDecreaseQuantity={this.handleDecreaseQuantity}
-        onDeleteProduct={this.handleDeleteProduct}
+        <Navbar count={this.getCartCount()} />
+        <Cart
+          products={products}
+          onIncreaseQuantity={this.handleIncreaseQuantity}
+          onDecreaseQuantity={this.handleDecreaseQuantity}
+          onDeleteProduct={this.handleDeleteProduct}
         />
-        <div style={{fontSize: 20, padding : 10, fontWeight: 'bold'
-        }}>Total: {this.getCartTotal()}</div>
+        <div style={{ fontSize: 20, padding: 10, fontWeight: "bold" }}>
+          Total: {this.getCartTotal()}
+        </div>
       </div>
     );
   }
