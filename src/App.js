@@ -9,17 +9,19 @@ class App extends React.Component {
     super();
     this.state = {
       products: [],
+      loading: true
     };
   }
 
   componentDidMount() {
-    const getData = async () => {
       db.collection("products").get().then(querySnapshot => {
-        const products = querySnapshot.docs.map(doc => doc.data());
-        this.setState({ products: products });
+        const products = querySnapshot.docs.map(doc => {
+          const data = doc.data()
+          data['id'] = doc.id;
+          return data;
+        });
+        this.setState({ products: products, loading: false });
       });
-    };
-    getData();
   }
 
   handleIncreaseQuantity = (product) => {
@@ -77,7 +79,7 @@ class App extends React.Component {
   };
 
   render() {
-    const { products } = this.state;
+    const { products, loading } = this.state;
     return (
       <div className="App">
         <Navbar count={this.getCartCount()} />
@@ -87,6 +89,7 @@ class App extends React.Component {
           onDecreaseQuantity={this.handleDecreaseQuantity}
           onDeleteProduct={this.handleDeleteProduct}
         />
+        {loading && <h2>Loading Products</h2>}
         <div style={{ fontSize: 20, padding: 10, fontWeight: "bold" }}>
           Total: {this.getCartTotal()}
         </div>
