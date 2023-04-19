@@ -2,7 +2,6 @@ import React from "react";
 import Cart from "./Cart";
 import Navbar from "./Navbar";
 import { db } from "./FirebaseConfig";
-import { collection, getDocs } from "firebase/firestore";
 
 class App extends React.Component {
   // State
@@ -14,14 +13,10 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    // onSnapshot(collection(db,"products"),(snapshot)=>{
-    //   console.log(snapshot);
-    // });
     const getData = async () => {
-      const querySnapshot = await getDocs(collection(db, "products"));
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
+      db.collection("products").get().then(querySnapshot => {
+        const products = querySnapshot.docs.map(doc => doc.data());
+        this.setState({ products: products });
       });
     };
     getData();

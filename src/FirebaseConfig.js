@@ -1,5 +1,7 @@
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+// import firebase, { initializeApp } from "firebase/app";
+import firebase from "firebase/compat/app";
+// import fires from "firebase/firestore";
+import 'firebase/compat/firestore';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -11,6 +13,8 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// const app = initializeApp(firebaseConfig);
+const firebaseApp = firebase.initializeApp(firebaseConfig);
 // Initialize Cloud Firestore and get a reference to the service
-export const db = getFirestore(app);
+export const db = firebaseApp.firestore();
+// getFirestore(firebaseApp);
