@@ -34,7 +34,7 @@ class App extends React.Component {
   }
 
   addProduct = () => {
-    db.collection()
+    db.collection("products")
       .add({
         img: "",
         price: 99,
