@@ -11,18 +11,9 @@ class App extends React.Component {
       products: [],
       loading: true,
     };
-    // this.db = db.firestore();
   }
 
   componentDidMount() {
-    // db.collection("products").get().then(querySnapshot => {
-    //   const products = querySnapshot.docs.map(doc => {
-    //     const data = doc.data()
-    //     data['id'] = doc.id;
-    //     return data;
-    //   });
-    //   this.setState({ products: products, loading: false });
-    // });
     db.collection("products").onSnapshot((querySnapshot) => {
       const products = querySnapshot.docs.map((doc) => {
         const data = doc.data();
@@ -50,14 +41,8 @@ class App extends React.Component {
   };
 
   handleIncreaseQuantity = (product) => {
-    // console.log(product);
     const { products } = this.state;
     const index = products.indexOf(product);
-    // products[index].qty += 1;
-    // this.setState({
-    //   //  products : products, OR shorthand
-    //   products,
-    // });
     const docRef = db.collection("products").doc(products[index].id);
     docRef.update({
       qty: products[index].qty + 1,
@@ -71,19 +56,12 @@ class App extends React.Component {
   };
 
   handleDecreaseQuantity = (product) => {
-    // console.log(product);
     const { products } = this.state;
     const index = products.indexOf(product);
     // base case
     if (products[index].qty === 0) {
       return;
     }
-    // products[index].qty -= 1;
-
-    // this.setState({
-    //   //  products : products, OR shorthand
-    //   products,
-    // });
     const docRef = db.collection("products").doc(products[index].id);
     docRef.update({
       qty: products[index].qty - 1,
@@ -97,11 +75,6 @@ class App extends React.Component {
   };
 
   handleDeleteProduct = (id) => {
-    // const { products } = this.state;
-    // const item = products.filter((item) => item.id !== id); // filter returns a new array
-    // this.setState({
-    //   products: item,
-    // });
     const docRef = db.collection("products").doc(id);
     docRef.delete()
     .then(() => {
