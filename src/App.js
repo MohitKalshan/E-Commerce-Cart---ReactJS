@@ -14,7 +14,12 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    db.collection("products").onSnapshot((querySnapshot) => {
+    db.collection("products")
+    // .where('price', '==',99) //query product
+    // .where('title', '=','mobile') //query product
+    // .orderBy('price', 'asc') //sort by price in ascending order
+    // .startAt(99) //starting point of the query
+    .onSnapshot((querySnapshot) => {
       const products = querySnapshot.docs.map((doc) => {
         const data = doc.data();
         data["id"] = doc.id;
