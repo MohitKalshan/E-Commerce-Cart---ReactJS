@@ -15,6 +15,7 @@ class App extends React.Component {
 
   componentDidMount() {
     db.collection("products")
+    // searching and sorting products
     // .where('price', '==',99) //query product
     // .where('title', '=','mobile') //query product
     // .orderBy('price', 'asc') //sort by price in ascending order
